@@ -28,7 +28,7 @@ npm start
 Acesse:
 - App: [http://localhost:4200](http://localhost:4200)
 - API: [http://localhost:3000/devices](http://localhost:3000/devices)
-- API-GRÁFICO: [http://localhost:3000/devices](http://localhost:3000/charts)
+- API-GRÁFICO: [http://localhost:3000/charts](http://localhost:3000/charts)
 
 ## 🌟 Extra (opcional)
 - Filtro por status (ativo/inativo)
