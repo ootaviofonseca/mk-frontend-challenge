@@ -1,27 +1,35 @@
-# MkFrontendChallenge
+# Moka Mind – Desafio Frontend Angular 🚀
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+## 🎯 Objetivo
+Criar um painel simples de **monitoramento de dispositivos IoT** consumindo uma API REST.
 
-## Development server
+## ⚙️ Requisitos
+1. Listar dispositivos (`GET /devices`)
+2. Criar novo dispositivo (`POST /devices`)
+3. Editar dispositivo (`PUT /devices/:id`)
+4. Remover dispositivo (`DELETE /devices/:id`)
+5. Exibir contador de quantos estão ativos/inativos
+6. Exibir um pequeno gráfico com os dados recentes dos dispositivos (`GET /charts`)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 💡 Conceitos Esperados
+- Componentes bem estruturados  
+- Reuso e injeção de dependência  
+- Uso de `HttpClient` com Observables  
+- Reactive Forms e validações  
+- Feedback visual (loading, sucesso, erro)
 
-## Code scaffolding
+## 🧩 Rodando o Projeto
+```bash
+npm install
+npm run mock
+npm start
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Acesse:
+- App: [http://localhost:4200](http://localhost:4200)
+- API: [http://localhost:3000/devices](http://localhost:3000/devices)
+- API-GRÁFICO: [http://localhost:3000/devices](http://localhost:3000/charts)
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## 🌟 Extra (opcional)
+- Filtro por status (ativo/inativo)
+- Layout responsivo

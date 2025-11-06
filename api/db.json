@@ -1,0 +1,50 @@
+{
+  "devices": [
+    {
+      "id": "1",
+      "name": "Sensor de Temperatura A1",
+      "type": "temperature",
+      "status": "active",
+      "lastUpdate": "2025-11-01T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "name": "Sensor de Umidade B2",
+      "type": "humidity",
+      "status": "inactive",
+      "lastUpdate": "2025-11-01T09:45:00Z"
+    }
+  ],
+  "charts": [
+    {
+      "id": "1",
+      "deviceId": "1",
+      "metric": "temperature",
+      "unit": "°C",
+      "readings": [
+        { "timestamp": "2025-11-06T06:00:00Z", "value": 22.3 },
+        { "timestamp": "2025-11-06T07:00:00Z", "value": 22.7 },
+        { "timestamp": "2025-11-06T08:00:00Z", "value": 23.1 },
+        { "timestamp": "2025-11-06T09:00:00Z", "value": 23.6 },
+        { "timestamp": "2025-11-06T10:00:00Z", "value": 24.1 },
+        { "timestamp": "2025-11-06T11:00:00Z", "value": 24.5 },
+        { "timestamp": "2025-11-06T12:00:00Z", "value": 25.0 }
+      ]
+    },
+    {
+      "id": "2",
+      "deviceId": "2",
+      "metric": "humidity",
+      "unit": "%",
+      "readings": [
+        { "timestamp": "2025-11-06T06:00:00Z", "value": 48 },
+        { "timestamp": "2025-11-06T07:00:00Z", "value": 50 },
+        { "timestamp": "2025-11-06T08:00:00Z", "value": 53 },
+        { "timestamp": "2025-11-06T09:00:00Z", "value": 55 },
+        { "timestamp": "2025-11-06T10:00:00Z", "value": 57 },
+        { "timestamp": "2025-11-06T11:00:00Z", "value": 56 },
+        { "timestamp": "2025-11-06T12:00:00Z", "value": 54 }
+      ]
+    }
+  ]
+}
