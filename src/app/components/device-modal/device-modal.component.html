@@ -1,0 +1,34 @@
+<!-- Modal -->
+<div class="modal fade" id="edicaoModal" tabindex="-1" aria-labelledby="edicaoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="edicaoModalLabel">Editar Dispositivo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="row g-3" [formGroup]="dispositivoForm" (ngSubmit)="enviarFormulario()">
+          <div class="col-md-6">
+            <label for="nomeDispositivo" class="form-label">Nome do dispositivo?</label>
+            <input  formControlName="nome" id="nomeDispositivo" type="text" placeholder="{{dispositivo?.name}}">
+          </div>
+          <div class="col-md-4">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" class="form-select">
+              <option selected>{{dispositivo?.status}}</option>
+              <option>active</option>
+              <option>inactive</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
