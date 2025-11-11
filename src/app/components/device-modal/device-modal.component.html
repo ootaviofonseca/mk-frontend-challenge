@@ -8,22 +8,21 @@
       </div>
       <div class="modal-body">
 
-        <form class="row g-3" [formGroup]="dispositivoForm" (ngSubmit)="enviarFormulario()">
+        <form class="row g-3" [formGroup]="dispositivoForm" >
           <div class="col-md-6">
-            <label for="nomeDispositivo" class="form-label">Nome do dispositivo?</label>
-            <input  formControlName="nome" id="nomeDispositivo" type="text" placeholder="{{dispositivo?.name}}">
+            <label for="nomeDispositivo" class="form-label">Nome do dispositivo</label>
+            <input  formControlName="name" id="nomeDispositivo" type="text"  value>
           </div>
           <div class="col-md-4">
             <label for="status" class="form-label">Status</label>
-            <select id="status" class="form-select">
-              <option selected>{{dispositivo?.status}}</option>
-              <option>active</option>
+            <select id="status" class="form-select" formControlName="status">
+              <option > active </option>
               <option>inactive</option>
             </select>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" (click)="editarDispositivo() " data-bs-target="#edicaoModal">Salvar</button>
           </div>
         </form>
 

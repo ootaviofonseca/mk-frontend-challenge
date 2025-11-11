@@ -16,7 +16,7 @@
       <td>{{dispositivo.status}}</td>
       <td>{{dispositivo.lastUpdate}}</td>
 
-      <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edicaoModal"  (click)="dispositivoSelecionado = dispositivo">Editar</button></td>
+      <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edicaoModal"  (click)="dispositivoSelecionado = dispositivo" >Editar</button></td>
       <td><button  type="button"  class="btn btn-danger" (click)="removerDispositivo(dispositivo.id)">Remover</button></td>
     </tr>
 
@@ -26,7 +26,7 @@
   }
 </table>
 <!-- Modal de edição-->
-<app-device-modal [dispositivo]="dispositivoSelecionado"></app-device-modal>
+<app-device-modal [dispositivo]="dispositivoSelecionado" (salvo)="editarDispositivo($event.id, $event.dispositivo)"></app-device-modal>
 
 
 

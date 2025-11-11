@@ -23,6 +23,7 @@ export class ListarDispositivosComponent {
     });
   }
 
+
   constructor(private service: DeviceService) {
     this.carregarDispositivos();
   }
@@ -42,6 +43,27 @@ export class ListarDispositivosComponent {
       });
     }
   }
+
+  editarDispositivo(id: string, dispositivo: Partial<Device>){
+    if (confirm('Tem certeza que deseja remover este dispositivo?')) {
+        this.service.updateDevice(id,dispositivo).subscribe({
+        next: () => {
+          alert(`Dispositivo ${id} editado com sucesso`);
+          this.carregarDispositivos()
+          },
+        error: (error) => {
+          alert("Erro ao editar dispositivo")
+          console.error('Erro ao editar dispositivo:', error);
+        }
+      });
+    }
+
+
+  }
+
+
+
+
 
 
 }
