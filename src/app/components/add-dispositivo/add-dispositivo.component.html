@@ -1,0 +1,39 @@
+
+<div class="modal fade" id="criaDispositivo" tabindex="-1" aria-labelledby="criaDispositivo" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="criaDispositivoLabel">
+          Adicionar Dispositivo
+        </h1>
+        <button type="button" (click)="limpaForm()" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="row g-3" [formGroup]="dispositivoForm" (submit)="criarDispositivo();" >
+          <div class="col-md-6">
+            <label for="nomeDispositivo" class="form-label">Nome do dispositivo</label>
+            <input  formControlName="name" id="nomeDispositivo" type="text" >
+          </div>
+          <div class="col-md-6">
+            <label for="tipoDispositivo" class="form-label">Tipo</label>
+            <input  formControlName="type" id="tipoDispositivo" type="text"  >
+          </div>
+          <div class="col-md-4">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" class="form-select" formControlName="status">
+              <option > active </option>
+              <option>inactive</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" >Criar</button>
+
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
