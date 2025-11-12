@@ -6,7 +6,7 @@ import { AddDispositivoComponent } from './components/add-dispositivo/add-dispos
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ListarDispositivosComponent],
+  imports: [RouterOutlet, ListarDispositivosComponent, AddDispositivoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

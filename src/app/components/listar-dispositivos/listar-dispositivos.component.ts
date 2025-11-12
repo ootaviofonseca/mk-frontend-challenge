@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Device, DeviceService } from '../../../core/services/device.service';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
 
@@ -15,14 +15,35 @@ export class ListarDispositivosComponent {
 
   dispositivos: Device[] = [];
   dispositivoSelecionado: any;
+  contActive =  signal(0);
+  contInactive =  signal(0);
 
-  //Usado paraq carregar todos dispositivos existentes
+  //Atualiza os contadores existentes
+  atualizarContadores() {
+    this.contActive.set(0);
+    this.contInactive.set(0);
+
+    this.dispositivos.forEach(dispositivo => {
+      if (dispositivo.status === 'active') {
+        this.contActive.update(prev => prev + 1);
+      } else {
+        this.contInactive.update(prev => prev + 1);
+      }
+    });
+  }
+
+
+  //Usado paraq carregar todos dispositivos
   carregarDispositivos() {
     this.service.getDevices().subscribe({
-      next: (data) => this.dispositivos = data,
+      next: (data) => { this.dispositivos = data,
+      this.atualizarContadores();
+      },
       error: (error) => console.error(error),
       complete: () => console.log('Todos itens foram carregados')
     });
+
+
   }
 
   constructor(private service: DeviceService) {

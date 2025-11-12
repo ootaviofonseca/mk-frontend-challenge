@@ -1,5 +1,43 @@
 
+
+<style>
+  .status-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: Arial, sans-serif;
+  }
+
+  .status-values {
+    display: flex;
+    gap: 1rem;
+    font-weight: bold;
+  }
+
+  .active { color: green; }
+  .inactive { color: red; }
+
+  select {
+    width: 150px;
+    padding: 0.3rem;
+  }
+</style>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#criaDispositivo"    >Adicionar Dispositivo</button>
+
+
+<div class="status-field">
+  <label>Status:</label>
+  <div class="status-values">
+    <span class="active">
+      Ativo: {{ contActive ()}}
+    </span>
+    <span class="inactive">
+      Inativo: {{ contInactive() }}
+    </span>
+  </div>
+</div>
+
+
 
 
 <table  class="table table-striped">
@@ -16,6 +54,7 @@
   }
 
   @for (dispositivo of dispositivos; track dispositivo) {
+
     <tr>
       <td>{{dispositivo.name}}</td>
       <td>{{dispositivo.status}}</td>
