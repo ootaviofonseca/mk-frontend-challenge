@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 export interface Device {
   id: string;
@@ -13,6 +13,10 @@ export interface Device {
 @Injectable({ providedIn: 'root' })
 export class DeviceService {
   private baseUrl = 'http://localhost:3000/devices';
+
+  //Para notifiar mudancas
+  private devicesChanged = new Subject<void>();
+  devicesChanged$ = this.devicesChanged.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -30,5 +34,9 @@ export class DeviceService {
 
   deleteDevice(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  notifyChanges() {
+    this.devicesChanged.next();
   }
 }
