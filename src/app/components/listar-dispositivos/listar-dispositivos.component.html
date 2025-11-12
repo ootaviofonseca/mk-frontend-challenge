@@ -1,9 +1,14 @@
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#criaDispositivo"    >Adicionar Dispositivo</button>
+
+
 <table  class="table table-striped">
   <!--Caso nao exista nenhum item nao mostra o cabeçaçho da tabela apenas o mensagem do @empty-->
   @if(dispositivos.length > 0){
      <tr>
       <th>Nome</th>
       <th>Status</th>
+      <th>Tipo</th>
       <th>Ultima Atualização</th>
       <th>Editar</th>
       <th>Remover</th>
@@ -14,6 +19,7 @@
     <tr>
       <td>{{dispositivo.name}}</td>
       <td>{{dispositivo.status}}</td>
+      <td>{{dispositivo.type}}</td>
       <td>{{dispositivo.lastUpdate}}</td>
 
       <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edicaoModal"  (click)="dispositivoSelecionado = dispositivo" >Editar</button></td>
@@ -26,7 +32,9 @@
   }
 </table>
 <!-- Modal de edição-->
-<app-device-modal [dispositivo]="dispositivoSelecionado" (salvo)="editarDispositivo($event.id, $event.dispositivo)"></app-device-modal>
+<app-device-modal     [dispositivo]="dispositivoSelecionado" (salvo)="editarDispositivo($event.id, $event.dispositivo)"></app-device-modal>
+
+
 
 
 

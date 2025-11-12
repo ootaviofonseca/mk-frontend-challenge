@@ -11,6 +11,8 @@ import { DeviceModalComponent } from '../device-modal/device-modal.component';
 })
 export class ListarDispositivosComponent {
 
+  showModal = false;
+
   dispositivos: Device[] = [];
   dispositivoSelecionado: any;
 
@@ -23,9 +25,12 @@ export class ListarDispositivosComponent {
     });
   }
 
-
   constructor(private service: DeviceService) {
     this.carregarDispositivos();
+
+    this.service.devicesChanged$.subscribe(() => {
+      this.carregarDispositivos();
+    });
   }
 
   removerDispositivo(id: string) {
@@ -33,14 +38,15 @@ export class ListarDispositivosComponent {
       this.service.deleteDevice(id).subscribe({
         next: () => {
           console.log(`Dispositivo ${id} removido com sucesso`);
-          // Atualiza a lista de dispositivos
-          this.carregarDispositivos()
+          this.service.notifyChanges();
 
         },
         error: (error) => {
           console.error('Erro ao remover dispositivo:', error);
         }
       });
+
+
     }
   }
 
@@ -49,7 +55,7 @@ export class ListarDispositivosComponent {
         this.service.updateDevice(id,dispositivo).subscribe({
         next: () => {
           alert(`Dispositivo ${id} editado com sucesso`);
-          this.carregarDispositivos()
+          this.service.notifyChanges();
           },
         error: (error) => {
           alert("Erro ao editar dispositivo")
@@ -57,13 +63,7 @@ export class ListarDispositivosComponent {
         }
       });
     }
-
-
   }
-
-
-
-
 
 
 }
