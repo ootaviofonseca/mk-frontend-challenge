@@ -2,6 +2,7 @@ import { Component, effect, EventEmitter, Input, Output, signal } from '@angular
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms'
 import { Device, DeviceService } from '../../../core/services/device.service';
 import * as bootstrap from 'bootstrap';
+import { criaFormDispositivo } from '../../../core/forms/device-forms';
 
 @Component({
   selector: 'app-device-modal',
@@ -11,18 +12,19 @@ import * as bootstrap from 'bootstrap';
   styleUrl: './device-modal.component.scss'
 })
 export class DeviceModalComponent {
+
   private _dispositivo = signal<Device | null>(null);
 
-   @Input()
+  //Pega o dispositivo atual
+  @Input()
   set dispositivo(value: Device | null) {
     this._dispositivo.set(value);
   }
-  dispositivoForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    status: new FormControl<'active' | 'inactive'>('active', [Validators.required])
-  });
 
-  constructor(private service: DeviceService) {
+  dispositivoForm = criaFormDispositivo()
+
+
+  constructor() {
     // Sempre que o dispositivoSignal muda, atualiza o formulário
     effect(() => {
       const dispositivo = this._dispositivo();
@@ -31,17 +33,25 @@ export class DeviceModalComponent {
           name: dispositivo.name,
           status: dispositivo.status
         });
-      } else {
 
-        //Para cadastro (nenhum dispositivo), limpa o formulário
+      } else {
         this.dispositivoForm.reset({
           status: 'active'
         });
       }
 
+
+
     });
   }
 
+  fechaModal(){
+    const modalEl = document.getElementById('edicaoModal');
+      if (modalEl) {
+        const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modal.hide();
+      }
+  }
 
   @Output() salvo = new EventEmitter<{ id: string; dispositivo: Partial<Device> }>();
 
@@ -57,13 +67,11 @@ export class DeviceModalComponent {
         lastUpdate: new Date().toISOString().split('.')[0] + 'Z'
       }
       this.salvo.emit({ id, dispositivo: dipositivoEditado });
+      this._dispositivo.set(null);
 
-      // Fecha  o modal depois de salvar o elemento editado
-      const modalEl = document.getElementById('edicaoModal');
-      if (modalEl) {
-        const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-        modal.hide();
-      }
+
     }
+    this.fechaModal();
   }
+
 }
