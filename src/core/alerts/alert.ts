@@ -1,24 +1,23 @@
 import * as bootstrap from 'bootstrap';
+import Swal from 'sweetalert2';
 
  //  msg - Mensagem a ser exibida
- // type - Tipo do toast ('success' ou 'error')
+ // type -  ('success' ou 'error')
 
-export function showToast(msg: string, type: 'success' | 'error' = 'success'): void {
-  const toastEl = document.querySelector('.toast') as HTMLElement | null;
+export function showAlert(msg: string, type: 'success' | 'error' = 'success'): void {
 
-  if (!toastEl) {
-    console.warn('Toast element not found in DOM');
-    return;
+  if(type == 'success' ){
+    Swal.fire({
+      theme: 'bootstrap-5-light',
+      icon:'success',
+      title: msg
+    })
+  } else{
+    Swal.fire({
+      theme: 'bootstrap-5-light',
+      icon:'error',
+      title: msg
+    })
+
   }
-
-  // Define a mensagem
-  const toastBody = toastEl.querySelector('.toast-body');
-  if (toastBody) toastBody.textContent = msg;
-
-  // define o tipo e sai da antigas
-  toastEl.classList.remove('text-bg-success', 'text-bg-danger');
-  toastEl.classList.add(type === 'success' ? 'text-bg-success' : 'text-bg-danger');
-
-  const toast = new bootstrap.Toast(toastEl);
-  toast.show();
 }

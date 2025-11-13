@@ -3,7 +3,7 @@ import {ReactiveFormsModule } from '@angular/forms';
 import { criaFormDispositivo } from '../../../core/forms/device-forms';
 import { Device, DeviceService } from '../../../core/services/device.service';
 import * as bootstrap from 'bootstrap';
-import { showToast } from '../../../core/alerts/alert';
+import { showAlert } from '../../../core/alerts/alert';
 
 @Component({
   selector: 'app-add-dispositivo',
@@ -35,7 +35,7 @@ export class AddDispositivoComponent {
     this.limpaForm();
   }
 
-  toastMessage = '';
+
 
   criarDispositivo(){
 
@@ -53,12 +53,12 @@ export class AddDispositivoComponent {
 
     this.service.createDevice(novoDispositivo).subscribe({
       next: () => {
-        showToast('Dispositivo criado com sucesso!', 'success');
+        showAlert('Dispositivo criado com sucesso!', 'success');
         this.service.notifyChanges();
 
       },
       error: () => {
-        showToast('Dispositivo criado com sucesso!', 'success');
+        showAlert('Erro ao criar Dispositivo', 'error');
       }
     });
 

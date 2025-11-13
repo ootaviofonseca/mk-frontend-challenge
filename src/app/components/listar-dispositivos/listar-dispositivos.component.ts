@@ -1,7 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { Device, DeviceService } from '../../../core/services/device.service';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
-import { showToast } from '../../../core/alerts/alert';
+import { showAlert } from '../../../core/alerts/alert';
+import Swal from 'sweetalert2';
+import 'sweetalert2/themes/bootstrap-5.css'
 
 @Component({
   selector: 'app-listar-dispotivos',
@@ -54,34 +56,60 @@ export class ListarDispositivosComponent {
   }
 
   removerDispositivo(id: string) {
-    if (confirm('Tem certeza que deseja remover este dispositivo?')) {
-      this.service.deleteDevice(id).subscribe({
-        next: () => {
-          showToast(`Dispositivo  removido `, 'success');;
-          // Atualiza a lista de dispositivos
-          this.carregarDispositivos()
+    Swal.fire({
+      theme: 'bootstrap-5-light',
+      title: 'Tem certeza?',
+      text: 'Esta ação não pode ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc3545'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.deleteDevice(id).subscribe({
+          next: () => {
+            showAlert(`Dispositivo  removido `, 'success');;
+            // Atualiza a lista de dispositivos
+            this.carregarDispositivos()
+          },
+          error: (error) => {
+            console.error('Erro ao remover dispositivo:', error);
+          }
+          });
+      }
+    });
 
-        },
-        error: (error) => {
-          console.error('Erro ao remover dispositivo:', error);
-        }
-      });
-    }
   }
 
+
+
   editarDispositivo(id: string, dispositivo: Partial<Device>){
-    if (confirm('Tem certeza que deseja  este dispositivo?')) {
+
+    Swal.fire({
+      theme: 'bootstrap-5-light',
+      title: 'Tem certeza que deseja editar este dispositivo?',
+      text: 'Esta ação não pode ser desfeita!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.service.updateDevice(id,dispositivo).subscribe({
-        next: () => {
-          showToast(`Dispositivo ${dispositivo.name} editado com sucesso`, 'success');
-          this.dispositivos = this.dispositivos.filter(d => d.id !== id);
-          },
-        error: (error) => {
-          showToast("Erro ao editar dispositivo", 'error')
-          console.error('Erro ao editar dispositivo:', error);
-        }
-      });
-    }
+          next: () => {
+            showAlert(`Dispositivo "${dispositivo.name}" editado com sucesso`, 'success');
+            this.carregarDispositivos();
+            },
+          error: () => {
+            showAlert("Erro ao editar dispositivo", 'error')
+
+          }
+        });
+      }
+    });
+
   }
 
 

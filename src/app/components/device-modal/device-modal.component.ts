@@ -1,6 +1,6 @@
 import { Component, effect, EventEmitter, Input, Output, signal } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms'
-import { Device, DeviceService } from '../../../core/services/device.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { Device } from '../../../core/services/device.service';
 import * as bootstrap from 'bootstrap';
 import { criaFormDispositivo } from '../../../core/forms/device-forms';
 
@@ -52,7 +52,7 @@ export class DeviceModalComponent {
         const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
         modal.hide();
       }
-      this.dispositivoForm.reset()
+
   }
 
   //Para quando sair do modal sem salvar voltar ao item corretamente
@@ -82,8 +82,6 @@ export class DeviceModalComponent {
         lastUpdate: new Date().toISOString().split('.')[0] + 'Z'
       }
       this.salvo.emit({ id, dispositivo: dipositivoEditado });
-      this._dispositivo.set(null);
-
 
     }
     this.fechaModal();
