@@ -1,5 +1,6 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+/*Form padrao usado para cadastro e edit*/
 export function criaFormDispositivo() {
   return new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -7,5 +8,7 @@ export function criaFormDispositivo() {
     status: new FormControl<'active' | 'inactive'>('active', [Validators.required])
   });
 }
+
+
 
 

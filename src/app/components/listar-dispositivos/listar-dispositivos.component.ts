@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { Device, DeviceService } from '../../../core/services/device.service';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
+import { showToast } from '../../../core/alerts/alert';
 
 @Component({
   selector: 'app-listar-dispotivos',
@@ -42,8 +43,6 @@ export class ListarDispositivosComponent {
       error: (error) => console.error(error),
       complete: () => console.log('Todos itens foram carregados')
     });
-
-
   }
 
   constructor(private service: DeviceService) {
@@ -58,28 +57,27 @@ export class ListarDispositivosComponent {
     if (confirm('Tem certeza que deseja remover este dispositivo?')) {
       this.service.deleteDevice(id).subscribe({
         next: () => {
-          console.log(`Dispositivo ${id} removido com sucesso`);
-          this.service.notifyChanges();
+          showToast(`Dispositivo  removido `, 'success');;
+          // Atualiza a lista de dispositivos
+          this.carregarDispositivos()
 
         },
         error: (error) => {
           console.error('Erro ao remover dispositivo:', error);
         }
       });
-
-
     }
   }
 
   editarDispositivo(id: string, dispositivo: Partial<Device>){
-    if (confirm('Tem certeza que deseja remover este dispositivo?')) {
+    if (confirm('Tem certeza que deseja  este dispositivo?')) {
         this.service.updateDevice(id,dispositivo).subscribe({
         next: () => {
-          alert(`Dispositivo ${id} editado com sucesso`);
-          this.service.notifyChanges();
+          showToast(`Dispositivo ${dispositivo.name} editado com sucesso`, 'success');
+          this.dispositivos = this.dispositivos.filter(d => d.id !== id);
           },
         error: (error) => {
-          alert("Erro ao editar dispositivo")
+          showToast("Erro ao editar dispositivo", 'error')
           console.error('Erro ao editar dispositivo:', error);
         }
       });
