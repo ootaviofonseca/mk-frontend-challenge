@@ -1,14 +1,16 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { Device, DeviceService } from '../../../core/services/device.service';
 import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import { showAlert } from '../../../core/alerts/alert';
 import Swal from 'sweetalert2';
 import 'sweetalert2/themes/bootstrap-5.css'
+import { criaFormStatus } from '../../../core/forms/device-forms';
+import { FormControl,ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-listar-dispotivos',
   standalone: true,
-  imports: [DeviceModalComponent],
+  imports: [DeviceModalComponent, ReactiveFormsModule],
   templateUrl: './listar-dispositivos.component.html',
   styleUrl: './listar-dispositivos.component.scss'
 })
@@ -16,17 +18,30 @@ export class ListarDispositivosComponent {
 
   showModal = false;
 
-  dispositivos: Device[] = [];
-  dispositivoSelecionado: any;
+  dispositivos = signal<Device[]>([]);
+  dispositivoSelecionado = signal <Device | null>(null);
   contActive =  signal(0);
   contInactive =  signal(0);
+
+  filtro = signal<'todos' | 'active' | 'inactive'>('todos');
+  filtroForm = criaFormStatus();
+
+  dispositivosFiltrados = computed(() => {
+    const lista = this.dispositivos();
+    const filtroAtual = this.filtro();
+
+    if (filtroAtual === 'todos') return lista;
+    return lista.filter(d => d.status === filtroAtual);
+  });
+
+
 
   //Atualiza os contadores existentes
   atualizarContadores() {
     this.contActive.set(0);
     this.contInactive.set(0);
 
-    this.dispositivos.forEach(dispositivo => {
+    this.dispositivos().forEach(dispositivo => {
       if (dispositivo.status === 'active') {
         this.contActive.update(prev => prev + 1);
       } else {
@@ -39,17 +54,21 @@ export class ListarDispositivosComponent {
   //Usado paraq carregar todos dispositivos
   carregarDispositivos() {
     this.service.getDevices().subscribe({
-      next: (data) => { this.dispositivos = data,
+      next: (data) => { this.dispositivos.set(data);
       this.atualizarContadores();
       },
       error: (error) => console.error(error),
       complete: () => console.log('Todos itens foram carregados')
     });
+
   }
 
   constructor(private service: DeviceService) {
     this.carregarDispositivos();
 
+    this.filtroForm.valueChanges.subscribe(value => {
+      this.filtro.set(value);
+    });
     this.service.devicesChanged$.subscribe(() => {
       this.carregarDispositivos();
     });
@@ -83,9 +102,7 @@ export class ListarDispositivosComponent {
   }
 
 
-
   editarDispositivo(id: string, dispositivo: Partial<Device>){
-
     Swal.fire({
       theme: 'bootstrap-5-light',
       title: 'Tem certeza que deseja editar este dispositivo?',

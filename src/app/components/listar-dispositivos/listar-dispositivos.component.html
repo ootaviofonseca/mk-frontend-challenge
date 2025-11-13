@@ -1,6 +1,3 @@
-
-
-
 <div class="div-status">
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#criaDispositivo"     >
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -35,12 +32,22 @@
   </div>
 </div>
 
-<div class = "tabela-dispositivos" >
 
+<div class = "tabela-dispositivos" >
+    <div>
+      <div class="filtro mt-3 mb-2">
+        <label for="filtroStatus" class="form-label fw-bold me-2">Filtrar por status:</label>
+        <select id="filtroStatus" style="width: fit-content;"  class="select-filtro"  [formControl]="filtroForm">
+          <option value="todos">Todos</option>
+          <option value="active">Ativos</option>
+          <option value="inactive">Inativos</option>
+        </select>
+    </div>
+  </div>
   <h2 class="table-title">Lista de Dispositivos</h2>
   <table  class="table table-striped table-bordered table-condensed table-hover">
     <!--Caso nao exista nenhum item nao mostra o cabeçaçho da tabela apenas o mensagem do @empty-->
-    @if(dispositivos.length > 0){
+    @if(dispositivosFiltrados().length > 0){
       <tr>
         <th>Nome</th>
         <th>Status</th>
@@ -51,7 +58,7 @@
       </tr>
     }
 
-    @for (dispositivo of dispositivos; track dispositivo) {
+    @for (dispositivo of dispositivosFiltrados(); track dispositivo) {
 
       <tr>
         <td>{{dispositivo.name}}</td>
@@ -59,7 +66,7 @@
         <td>{{dispositivo.type}}</td>
         <td>{{dispositivo.lastUpdate}}</td>
 
-        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edicaoModal"  (click)="dispositivoSelecionado = dispositivo" >
+        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edicaoModal"  (click)="dispositivoSelecionado.set(dispositivo)" >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -79,8 +86,9 @@
   </table>
 
 </div>
+
 <!-- Modal de edição-->
-<app-device-modal     [dispositivo]="dispositivoSelecionado" (salvo)="editarDispositivo($event.id, $event.dispositivo)"></app-device-modal>
+<app-device-modal     [dispositivo]="dispositivoSelecionado()" (salvo)="editarDispositivo($event.id, $event.dispositivo)"></app-device-modal>
 
 
 

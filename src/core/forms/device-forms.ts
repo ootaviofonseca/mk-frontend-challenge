@@ -9,6 +9,12 @@ export function criaFormDispositivo() {
   });
 }
 
+export function criaFormStatus() {
+  return new FormControl<'todos' | 'active' | 'inactive'>('todos', { nonNullable: true })
+}
+
+
+
 
 
 
