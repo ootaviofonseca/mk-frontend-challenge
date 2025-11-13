@@ -22,6 +22,7 @@ export class GraficoComponent {
     this.carregarGraficos()
   }
 
+  //Funcao para carregar os graficos do banco de dados
   carregarGraficos() {
     this.service.getGraficos().subscribe({
       next: (data) => {
@@ -44,13 +45,16 @@ export class GraficoComponent {
     });
   }
 
+  ///FUncao para criar o grafico usando a biblioteca charts.js
   renderizarGrafico(grafico: Grafico) {
     if (!grafico) return;
     if (this.chart) this.chart.destroy();
 
+    // Seleciona o canvas do grafico
     const ctx = document.getElementById('chartCanvas') as HTMLCanvasElement;
     if (!ctx) return;
 
+    // Cria o grafico
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -107,13 +111,13 @@ export class GraficoComponent {
     });
   }
 
+  //Funcoes para navegar entre os graficos
   anterior() {
     if (this.graficos.length === 0) return;
     this.indiceAtual = (this.indiceAtual - 1 + this.graficos.length) % this.graficos.length;
     this.graficoSelecionado = this.graficos[this.indiceAtual];
     this.renderizarGrafico(this.graficoSelecionado);
   }
-
   proximo() {
     if (this.graficos.length === 0) return;
     this.indiceAtual = (this.indiceAtual + 1) % this.graficos.length;

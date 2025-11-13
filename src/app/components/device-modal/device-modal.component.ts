@@ -3,6 +3,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { Device } from '../../../core/services/device.service';
 import * as bootstrap from 'bootstrap';
 import { criaFormDispositivo } from '../../../core/forms/device-forms';
+import { showAlert } from '../../../core/alerts/alert';
 
 @Component({
   selector: 'app-device-modal',
@@ -46,6 +47,7 @@ export class DeviceModalComponent {
     });
   }
 
+
   fechaModal(){
     const modalEl = document.getElementById('edicaoModal');
       if (modalEl) {
@@ -55,7 +57,8 @@ export class DeviceModalComponent {
 
   }
 
-  //Para quando sair do modal sem salvar voltar ao item corretamente
+
+  //Para quando sair do modal sem salvar, voltar ao item corretamente
   voltaAoNormal(){
     const dispositivo = this._dispositivo();
     if (dispositivo) {
@@ -66,12 +69,23 @@ export class DeviceModalComponent {
     });}
   }
 
+  //Emite o dispositivo editado
   @Output() salvo = new EventEmitter<{ id: string; dispositivo: Partial<Device> }>();
 
+  //Função para editar o dispositivo
   editarDispositivo(){
     const novoNome = this.dispositivoForm.get('name')?.value;
     const novoStatus = this.dispositivoForm.get('status')?.value;
     const novoTipo = this.dispositivoForm.get('type')?.value;
+
+    if (!novoNome || !novoStatus || !novoTipo) {
+      showAlert('Preencha todos os campos antes de salvar.', 'warning');
+      this.dispositivoForm.markAllAsTouched();
+      this.fechaModal()
+
+      return;
+    }
+
     if(novoNome != this._dispositivo()?.name || novoStatus != this._dispositivo()?.status|| novoTipo != this._dispositivo()?.type){
 
       const id = this._dispositivo()!.id!;

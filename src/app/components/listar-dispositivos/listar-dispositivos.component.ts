@@ -23,9 +23,11 @@ export class ListarDispositivosComponent {
   contActive =  signal(0);
   contInactive =  signal(0);
 
+  //Cria o filtro e o form
   filtro = signal<'todos' | 'active' | 'inactive'>('todos');
   filtroForm = criaFormStatus();
 
+  //Pega os dispositivos pelo filtro
   dispositivosFiltrados = computed(() => {
     const lista = this.dispositivos();
     const filtroAtual = this.filtro();
@@ -36,7 +38,7 @@ export class ListarDispositivosComponent {
 
 
 
-  //Atualiza os contadores existentes
+  //Atualiza os contadores de acordo com cada modificacao
   atualizarContadores() {
     this.contActive.set(0);
     this.contInactive.set(0);
@@ -49,7 +51,6 @@ export class ListarDispositivosComponent {
       }
     });
   }
-
 
   //Usado paraq carregar todos dispositivos
   carregarDispositivos() {
@@ -74,6 +75,7 @@ export class ListarDispositivosComponent {
     });
   }
 
+  //Funcao para remover dispositivo
   removerDispositivo(id: string) {
     Swal.fire({
       theme: 'bootstrap-5-light',
@@ -101,7 +103,7 @@ export class ListarDispositivosComponent {
 
   }
 
-
+  //Funcao para revocer dispositivo
   editarDispositivo(id: string, dispositivo: Partial<Device>){
     Swal.fire({
       theme: 'bootstrap-5-light',

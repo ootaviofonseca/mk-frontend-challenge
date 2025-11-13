@@ -14,11 +14,21 @@
         <form class="row g-3" [formGroup]="dispositivoForm" (submit)="criarDispositivo();" >
           <div class="col-md-6">
             <label for="nomeDispositivo" class="form-label">Nome do dispositivo</label>
-            <input  formControlName="name" id="nomeDispositivo" type="text" >
+            <input  formControlName="name" id="nomeDispositivo" type="text"
+            [class.is-invalid]="dispositivoForm.get('name')?.invalid && dispositivoForm.get('name')?.touched">
+
+            <div class="invalid-feedback">
+              Preencha o nome.
+            </div>
+
           </div>
           <div class="col-md-6">
             <label for="tipoDispositivo" class="form-label">Tipo</label>
-            <input  formControlName="type" id="tipoDispositivo" type="text"  >
+            <input  formControlName="type" id="tipoDispositivo" type="text"
+             [class.is-invalid]="dispositivoForm.get('type')?.invalid && dispositivoForm.get('type')?.touched">
+             <div class="invalid-feedback">
+              Preencha o tipo.
+            </div>
           </div>
           <div class="col-md-4">
             <label for="status" class="form-label">Status</label>

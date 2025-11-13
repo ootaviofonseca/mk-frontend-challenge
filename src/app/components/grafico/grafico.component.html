@@ -15,7 +15,7 @@
         @if (graficos.length > 0) {
           <div class="navegacao">
             <button class="seta" (click)="anterior()">&#9664;</button>
-
+            <!--Onde os graficos mudam-->
             <div class="info-grafico">
               <h3>{{ graficoSelecionado?.metric?.toUpperCase() }} ({{ graficoSelecionado?.unit?.toUpperCase() }})</h3>
               <p>Dipositivo: {{ graficoSelecionado?.deviceId}}</p>

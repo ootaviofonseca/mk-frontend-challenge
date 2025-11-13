@@ -20,6 +20,7 @@ export class AddDispositivoComponent {
   constructor(private service: DeviceService) {
   }
 
+  // Função para limpar o formulário
   limpaForm(){
      this.dispositivoForm.reset({
       name: '',
@@ -27,19 +28,22 @@ export class AddDispositivoComponent {
       status: 'active'
     });
   }
+
+  // Função para fechar o modal
   fecharModal() {
     const modalEl = document.getElementById('criaDispositivo');
     const modal = bootstrap.Modal.getInstance(modalEl!);
     modal?.hide();
 
-    this.limpaForm();
+
   }
 
-
-
+  // Função para criar um novo dispositivo
   criarDispositivo(){
 
     if (this.dispositivoForm.invalid) {
+      this.dispositivoForm.markAllAsTouched()
+      showAlert('Por favor, preencha todos os campos corretamente.', 'error');
       this.fecharModal();
       return;
     }
@@ -55,6 +59,7 @@ export class AddDispositivoComponent {
       next: () => {
         showAlert('Dispositivo criado com sucesso!', 'success');
         this.service.notifyChanges();
+        //this.limpaForm();
 
       },
       error: () => {
@@ -63,8 +68,6 @@ export class AddDispositivoComponent {
     });
 
     this.fecharModal();
-
-
   }
 
 }

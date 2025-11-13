@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
  //  msg - Mensagem a ser exibida
  // type -  ('success' ou 'error')
 
-export function showAlert(msg: string, type: 'success' | 'error' = 'success'): void {
+export function showAlert(msg: string, type: 'success' | 'error' | 'warning' = 'success'): void {
 
   if(type == 'success' ){
     Swal.fire({
@@ -12,12 +12,18 @@ export function showAlert(msg: string, type: 'success' | 'error' = 'success'): v
       icon:'success',
       title: msg
     })
-  } else{
+  } else if(type == 'error'){
     Swal.fire({
       theme: 'bootstrap-5-light',
       icon:'error',
       title: msg
     })
 
+  }else{
+    Swal.fire({
+      theme: 'bootstrap-5-light',
+      icon:'warning',
+      title: msg
+    })
   }
 }
