@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { ListarDispositivosComponent } from './components/listar-dispositivos/listar-dispositivos.component';
 import { AddDispositivoComponent } from './components/add-dispositivo/add-dispositivo.component';
+import { GraficoComponent } from "./components/grafico/grafico.component";
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ListarDispositivosComponent, AddDispositivoComponent],
+  imports: [RouterOutlet, ListarDispositivosComponent, AddDispositivoComponent, GraficoComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

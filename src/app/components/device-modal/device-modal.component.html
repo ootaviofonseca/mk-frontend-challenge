@@ -1,26 +1,29 @@
 
 <div class="modal fade" id="edicaoModal" tabindex="-1" aria-labelledby="edicaoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="edicaoModalLabel">
           Editar Dispositivo
         </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="voltaAoNormal()" ></button>
       </div>
       <div class="modal-body">
 
         <form class="row g-3" [formGroup]="dispositivoForm"  >
           <div class="col-md-6">
             <label for="nomeDispositivo" class="form-label">Nome do dispositivo</label>
-            <input  formControlName="name" id="nomeDispositivo" type="text">
+            <input  formControlName="name" id="nomeDispositivo" type="text" >
           </div>
-
+          <div class="col-md-6">
+            <label for="tipoDispositivo" class="form-label">Tipo</label>
+            <input  formControlName="type" id="tipoDispositivo" type="text"  >
+          </div>
           <div class="col-md-4">
             <label for="status" class="form-label">Status</label>
             <select id="status" class="form-select" formControlName="status">
-              <option > active </option>
-              <option>inactive</option>
+              <option class="ativo"> active </option>
+              <option class="inativo">inactive</option>
             </select>
           </div>
           <div class="modal-footer">

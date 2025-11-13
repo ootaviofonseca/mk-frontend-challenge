@@ -15,7 +15,7 @@ export class DeviceModalComponent {
 
   private _dispositivo = signal<Device | null>(null);
 
-  //Pega o dispositivo atual
+  //Pega o dispositivo
   @Input()
   set dispositivo(value: Device | null) {
     this._dispositivo.set(value);
@@ -31,7 +31,8 @@ export class DeviceModalComponent {
       if (dispositivo) {
         this.dispositivoForm.patchValue({
           name: dispositivo.name,
-          status: dispositivo.status
+          status: dispositivo.status,
+          type: dispositivo.type
         });
 
       } else {
@@ -51,6 +52,18 @@ export class DeviceModalComponent {
         const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
         modal.hide();
       }
+      this.dispositivoForm.reset()
+  }
+
+  //Para quando sair do modal sem salvar voltar ao item corretamente
+  voltaAoNormal(){
+    const dispositivo = this._dispositivo();
+    if (dispositivo) {
+      this.dispositivoForm.patchValue({
+        name: dispositivo.name,
+        status: dispositivo.status,
+        type: dispositivo.type
+    });}
   }
 
   @Output() salvo = new EventEmitter<{ id: string; dispositivo: Partial<Device> }>();
@@ -58,12 +71,14 @@ export class DeviceModalComponent {
   editarDispositivo(){
     const novoNome = this.dispositivoForm.get('name')?.value;
     const novoStatus = this.dispositivoForm.get('status')?.value;
-    if(novoNome != this._dispositivo()?.name || novoStatus != this._dispositivo()?.status){
+    const novoTipo = this.dispositivoForm.get('type')?.value;
+    if(novoNome != this._dispositivo()?.name || novoStatus != this._dispositivo()?.status|| novoTipo != this._dispositivo()?.type){
 
       const id = this._dispositivo()!.id!;
       const dipositivoEditado: Partial<Device>  = {
         name: novoNome!,
         status: novoStatus!,
+        type: novoTipo!,
         lastUpdate: new Date().toISOString().split('.')[0] + 'Z'
       }
       this.salvo.emit({ id, dispositivo: dipositivoEditado });
